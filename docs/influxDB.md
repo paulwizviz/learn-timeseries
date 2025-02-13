@@ -6,6 +6,14 @@ This covers aspects of InfluxDB:
 * [Working Examples](#working-examples)
 * [References](#references)
 
+## Key concepts
+
+* Bucket == database
+* Measurements == table
+* Tags & Fields converted to columns.
+    * Tags store metadata
+    * Fields actual values
+
 ## Deployments
 
 * [Docker compose](#docker-compose)
@@ -32,7 +40,8 @@ To generate tokens and assign to variable **DOCKER_INFLUXDB_INIT_ADMIN_TOKEN**, 
 
 ## Working Examples
 
-* [Example 1](../cmd/influx/ex1/main.go) - This example demonstrates example of writing to Influx DB
+* V2
+    * [Example 1](../cmd/influx/ex1/main.go) - This example demonstrates example of writing to Influx DB
 
 ## References
 
