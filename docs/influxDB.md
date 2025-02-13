@@ -3,6 +3,8 @@
 This covers aspects of InfluxDB:
 
 * [Deployment](#deployment)
+* [Working Examples](#working-examples)
+* [References](#references)
 
 ## Deployments
 
@@ -31,3 +33,8 @@ To generate tokens and assign to variable **DOCKER_INFLUXDB_INIT_ADMIN_TOKEN**, 
 ## Working Examples
 
 * [Example 1](../cmd/influx/ex1/main.go) - This example demonstrates example of writing to Influx DB
+
+## References
+
+* [Official Documentation](https://docs.influxdata.com/)
+* [Flux QL](https://docs.influxdata.com/influxdb/cloud/reference/syntax/flux/flux-vs-influxql/)
