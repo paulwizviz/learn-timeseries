@@ -5,4 +5,4 @@
 .envrc
 
 # InfluxDB volume
-deployments/influxdb_data/
+deployments/influx2/influxdb_data/
