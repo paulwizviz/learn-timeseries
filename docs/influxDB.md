@@ -41,7 +41,7 @@ To generate tokens and assign to variable **DOCKER_INFLUXDB_INIT_ADMIN_TOKEN**, 
 ## Working Examples
 
 * V2
-    * [Example 1](../cmd/influx/ex1/main.go) - This example demonstrates example of writing to Influx DB
+    * [Example 1](../cmd/influx/ex1/main.go) - This example demonstrates example of writing to influxDB using write points and write blocking operations.
 
 ## References
 

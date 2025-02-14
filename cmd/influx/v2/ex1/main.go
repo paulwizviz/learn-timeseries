@@ -2,8 +2,8 @@ package main
 
 import (
 	"context"
+	"go-timescaledb/internal/event"
 	"log"
-	"math/rand"
 	"os"
 	"os/signal"
 	"syscall"
@@ -12,45 +12,24 @@ import (
 	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
 )
 
-type Event struct {
-	TS    time.Time `json:"time_stamp"`
-	Value int       `json:"value"`
-}
-
-func generateEvent(ctx context.Context) chan Event {
-	event := make(chan Event, 1)
-	go func() {
-		defer close(event)
-	loop:
-		for {
-			select {
-			case <-ctx.Done():
-				break loop
-			default:
-				event <- Event{
-					TS:    time.Now(),
-					Value: rand.Intn(10) + 1,
-				}
-			}
-		}
-	}()
-	return event
-}
-
-func writeToInfluxDB(ctx context.Context, events chan Event, cred, org, bucket string) {
+func writeToInfluxDB(ctx context.Context, events chan event.Weather, cred, org, bucket string) {
 	// Connect to InfluxDB
 	influxClient := influxdb2.NewClient("http://localhost:8086", cred)
 	defer influxClient.Close()
 
+	// Using blocking operations
 	writeAPI := influxClient.WriteAPIBlocking(org, bucket)
 
 	for event := range events {
 		point := influxdb2.NewPoint(
-			"events",
-			map[string]string{},
-			map[string]interface{}{
-				"timestamp": event.TS,
-				"value":     event.Value,
+			"weather",
+			map[string]string{ // tags
+				"country":  event.Country,
+				"location": event.Location,
+			},
+			map[string]interface{}{ // field
+				"temperature": event.Temp,
+				"rain":        event.Rain,
 			},
 			time.Now(),
 		)
@@ -81,7 +60,7 @@ func main() {
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
-	events := generateEvent(ctx)
+	events := event.Generate(ctx)
 	writeToInfluxDB(ctx, events, influxCred, influxOrg, influxBucket)
 
 	osSig := make(chan os.Signal, 1)
