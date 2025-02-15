@@ -12,6 +12,7 @@ COMMAND=$1
 
 case $COMMAND in
     "clean")
+        docker compose -f ./deployments/influx2/docker-compose.yaml down
         docker rmi -f ${INFLUX_IMAGE}
         docker rmi -f $(docker images --filter "dangling=true" -q)
         rm -rf ./deployments/influxdb_data
