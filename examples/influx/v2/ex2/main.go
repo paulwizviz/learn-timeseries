@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
-	"go-timescaledb/internal/event"
+	"go-timescaledb/internal/weather"
 	"log"
 	"os"
 	"os/signal"
@@ -13,7 +13,7 @@ import (
 	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
 )
 
-func writeToInfluxDB(events chan event.Weather, cred, org, bucket string) {
+func writeToInfluxDB(events chan weather.Event, cred, org, bucket string) {
 	// Connect to InfluxDB
 	client := influxdb2.NewClient("http://localhost:8086", cred)
 	defer client.Close()
@@ -66,7 +66,7 @@ func main() {
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
-	events := event.Generate(ctx)
+	events := weather.GenerateEvents(ctx)
 	writeToInfluxDB(events, influxCred, influxOrg, influxBucket)
 
 	osSig := make(chan os.Signal, 1)

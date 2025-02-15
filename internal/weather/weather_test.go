@@ -1,4 +1,4 @@
-package event
+package weather
 
 import (
 	"context"
@@ -10,7 +10,7 @@ import (
 
 func TestGenerateEventCancelled(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
-	Generate(ctx)
+	GenerateEvents(ctx)
 	go func() {
 		time.Sleep(1 * time.Millisecond)
 		if true { // Set false to cause test to fail
