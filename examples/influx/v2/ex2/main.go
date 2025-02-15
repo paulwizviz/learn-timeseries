@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"go-timescaledb/internal/event"
 	"log"
 	"os"
@@ -12,14 +13,21 @@ import (
 	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
 )
 
-func writeToInfluxDB(ctx context.Context, events chan event.Weather, cred, org, bucket string) {
+func writeToInfluxDB(events chan event.Weather, cred, org, bucket string) {
 	// Connect to InfluxDB
-	influxClient := influxdb2.NewClient("http://localhost:8086", cred)
-	defer influxClient.Close()
+	client := influxdb2.NewClient("http://localhost:8086", cred)
+	defer client.Close()
 
 	// Using blocking operations
-	writeAPI := influxClient.WriteAPIBlocking(org, bucket)
-	defer writeAPI.Flush(ctx)
+	writeAPI := client.WriteAPI(org, bucket)
+	errors := writeAPI.Errors()
+	// Create goroutine to log errors
+	go func() {
+		for err := range errors {
+			fmt.Printf("write error: %s\n", err.Error())
+		}
+	}()
+	defer writeAPI.Flush()
 
 	for event := range events {
 		point := influxdb2.NewPoint(
@@ -34,11 +42,8 @@ func writeToInfluxDB(ctx context.Context, events chan event.Weather, cred, org, 
 			},
 			time.Now(),
 		)
-		if err := writeAPI.WritePoint(ctx, point); err != nil {
-			log.Printf("Error writing to InfluxDB: %v", err)
-		} else {
-			log.Printf("Event written to InfluxDB successfully: %+v", event)
-		}
+		writeAPI.WritePoint(point)
+		fmt.Printf("Written point: %v\n", point)
 	}
 }
 
@@ -62,7 +67,7 @@ func main() {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	events := event.Generate(ctx)
-	writeToInfluxDB(ctx, events, influxCred, influxOrg, influxBucket)
+	writeToInfluxDB(events, influxCred, influxOrg, influxBucket)
 
 	osSig := make(chan os.Signal, 1)
 	signal.Notify(osSig, os.Interrupt, syscall.SIGTERM)
