@@ -41,8 +41,11 @@ To generate tokens and assign to variable **DOCKER_INFLUXDB_INIT_ADMIN_TOKEN**, 
 ## Working Examples
 
 * V2
-    * [Example 1](../examples/influx/v2/ex1/main.go) - This example demonstrates writing to influxDB using point types and write blocking operations.
-    * [Example 2](../examples/influx/v2/ex2/main.go) - This example demonstrates writing to influxDB using point types and async write operations. 
+    * Write
+        * [Example 1](../examples/influx/v2/ex1/main.go) - This example demonstrates writing to influxDB using point types and write blocking operations.
+        * [Example 2](../examples/influx/v2/ex2/main.go) - This example demonstrates writing to influxDB using point types and async write operations.
+    * Query
+        * [Example 3](../examples/influx/v2/ex3/main.go) - This example demonstrates the process of querying the DB using a simple FluxQL by measurement only.
 
 ## References
 
