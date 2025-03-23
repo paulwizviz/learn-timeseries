@@ -1,18 +1,16 @@
 # InfluxDB
 
-This covers aspects of InfluxDB:
-
-* [Deployment](#deployment)
-* [Working Examples](#working-examples)
+* [Concepts](#concepts)
+* [Deployment](#deployments)
 * [References](#references)
 
-## Key concepts
+## Concepts
 
 * Bucket == database
 * Measurements == table
 * Tags & Fields converted to columns.
-    * Tags store metadata
-    * Fields actual values
+  * Tags store metadata
+  * Fields actual values
 
 ## Deployments
 
@@ -32,24 +30,14 @@ The following are potential values for **DOCKER_INFLUXDB_INIT_MODE**
 | Value | Description |
 |---|---|
 | **setup** | The recommended value. Automatically creates an initial admin user, organisation, bucket, and authentication token on first startup. |
-| **upgrade** |	Used when upgrading an existing InfluxDB instance. Keeps existing data while upgrading metadata. |
+| **upgrade** | Used when upgrading an existing InfluxDB instance. Keeps existing data while upgrading metadata. |
 
 To generate tokens and assign to variable **DOCKER_INFLUXDB_INIT_ADMIN_TOKEN**, these are the following options:
 
 * **Option 1**: Using openssl. Run the command `openssl rand -base64 32`
 
-## Working Examples
-
-* V2
-    * Write
-        * [Example 1](../examples/influx/v2/ex1/main.go) - This example demonstrates writing to influxDB using point types and write blocking operations.
-        * [Example 2](../examples/influx/v2/ex2/main.go) - This example demonstrates writing to influxDB using point types and async write operations.
-    * Query
-        * [Example 3](../examples/influx/v2/ex3/main.go) - This example demonstrates the process of querying the DB using a simple FluxQL by measurement only.
-        * [Example 4](../examples/influx/v2/ex4/main.go) - This example demonstrates the process of querying DB using FluxQL filtering only one column.
-        * [Example 5](../examples/influx/v2/ex5/main.go) - This example demonstrates the process of querying and pivoting DB.
-
 ## References
 
 * [Official Documentation](https://docs.influxdata.com/)
 * [Flux QL](https://docs.influxdata.com/influxdb/cloud/reference/syntax/flux/flux-vs-influxql/)
+* [InfuxDB: Overview, Key Concepts and Demo | Getting Started](https://www.youtube.com/watch?v=gb6AiqCJqP0)

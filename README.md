@@ -6,11 +6,15 @@ This projects demonstrates techniques to develop applications using Go and time 
 
 * [InfluxDB](./docs/influxDB.md)
 
+## Useful References
+
+* [Time Series Databases Explained](https://www.influxdata.com/time-series-database/)
+
 ## Disclaimer
 
-This project is for educational purposes only. It is not a production-ready solution and requires significant modifications, rigorous security audits, and extensive testing before use in any production environment.
+This project is for educational purposes only. It is not a production-ready solution and requires significant modifications, rigorous security audits, and extensive testing for use in a production environment.
 
-This project is ongoing and may undergo changes without prior notification. By using this project, you acknowledge that you do so at your own risk. The authors of this project accept no liability for any issues or damages resulting from its use. Please use this project as a learning resource and not as a fully functional or secure application.
+This project is ongoing and subject to changes without prior notice. By using this project, you acknowledge that you do so at your own risk. The authors of this project accept no liability for any issues or damages resulting from its use. Please use this project as a learning resource, and not as a fully functional or secure application.
 
 ## Copyright
 
