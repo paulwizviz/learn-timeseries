@@ -5,6 +5,8 @@ This projects demonstrates techniques to develop applications using Go and time 
 ## Content
 
 * [InfluxDB](./docs/influxDB.md)
+* [Prometheus](./docs/prometheus.md)
+* [Types](./docs/types.md)
 
 ## Useful References
 
